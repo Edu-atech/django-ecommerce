@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block title %} Ecom | {{object.title}} {% endblock title %}
+{% load static %}
+
+{% block content %}
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+    >
+      <div class="col-md-4 mb-5">
+          <!-- Product image-->
+          {% if object.image %}
+              <img class="card-img-top p-2" src="{{ object.image.url }}" alt="..." />
+          {% else %}
+              <img class="card-img-top p-2" src="{% static 'image/no_image.jpg' %}" alt="..." />
+          {% endif %}
+      </div>
+
+      <div class="col-md-8 mb-5">
+          <!-- Product details-->
+
+            <div class="text-center">
+              <!-- Product name-->
+              <h5 class="fw-bolder">{{ object.title }}</h5>
+              <!-- Product price-->
+              {% if object.discount_price %}
+
+                <p><del class="mt-2 text-danger">R${{ object.price }}</del>
+              R${{ object.discount_price }}</p>
+              <span class="badge rounded-pill bg-danger">{{object.get_discount_percent|floatformat:2}}% off</span>
+              {% else %}
+
+                <p>R${{ object.price }}</p>
+
+              {% endif %}
+
+                <span class="badge rounded-pill text-bg-info">{{ object.get_category_display }}</span>
+                <span class="badge rounded-pill text-bg-info">{{ object.get_label_display }}</span>
+
+              <p>{{ item.description }}</p>
+
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <div class="row">
+                    <a class="btn btn-outline-dark mt-auto me-4" href="{% url 'frontend:item-list' %}">Continue shopping</a>
+                    <a class="btn btn-outline-dark mt-auto" href="#">Add to cart <i class="bi-cart-fill me-1"></i></a>
+                  </div>
+                </div>  
+              </div>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
